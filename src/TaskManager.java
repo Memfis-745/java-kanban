@@ -31,8 +31,17 @@ public class TaskManager {
         nulId();
     }
 
-    public void removeAllSubTask() { // 2. Удалить все задачи"
+    public void removeAllSubTask() { // 2. Удалить все подзадачи"
         listOfSubTask.clear();
+
+        for(Epic epic : listOfEpic.values()){
+
+            System.out.println(epic);
+            epic.clearEpicSub();
+            System.out.println(epic);
+            epic.setStatus(Status.NEW);
+
+        }
         nulId();
     }
 

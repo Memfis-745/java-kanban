@@ -18,6 +18,10 @@ public class Epic extends Task{
         epicSub.remove(subId);
     }
 
+    public void clearEpicSub(){
+        epicSub.clear();
+    }
+
     public ArrayList<Integer> getEpicSub(){
         return epicSub;
     }
@@ -52,6 +56,8 @@ public class Epic extends Task{
                 } else if (epicSub.size() == d) {
                     taskStatus = Status.DONE;
                 }
+            } else {
+                taskStatus = Status.NEW;
             }
         }
         // return taskStatus;
