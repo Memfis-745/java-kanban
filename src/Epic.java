@@ -6,6 +6,7 @@ public class Epic extends Task{
 
     public Epic(String name, String description) {
         super(name, description);
+
     }
 
     public void setId (int setEpicId){
@@ -31,36 +32,39 @@ public class Epic extends Task{
         int n = 0;
         int p = 0;
         int d = 0;
+       if (!listOfSubTask.isEmpty()) {
+           for (Integer epic : epicSub) {
+               if (epic != null) {
+                   Subtask subtask = listOfSubTask.get(epic);
 
-        for (Integer epic : epicSub) {
-            if (epic != null) {
-                Subtask subtask = listOfSubTask.get(epic);
+                   switch (subtask.getStatus()) {
+                       case NEW:
+                           n++;
+                           break;
+                       case IN_PROGRESS:
+                           p++;
+                           break;
+                       case DONE:
+                           d++;
+                           break;
+                       default:
+                           break;
+                   }
+                   if (epicSub.size() == n) {
+                       taskStatus = Status.NEW;
+                   } else if (epicSub.size() == p) {
+                       taskStatus = Status.IN_PROGRESS;
+                   } else if (epicSub.size() == d) {
+                       taskStatus = Status.DONE;
+                   }
 
-                switch (subtask.getStatus()) {
-                    case NEW:
-                        n++;
-                        break;
-                    case IN_PROGRESS:
-                        p++;
-                        break;
-                    case DONE:
-                        d++;
-                        break;
-                    default:
-                        break;
-                }
-                if (epicSub.size() == n) {
-                    taskStatus = Status.NEW;
-                } else if (epicSub.size() == p) {
-                    taskStatus = Status.IN_PROGRESS;
-                } else if (epicSub.size() == d) {
-                    taskStatus = Status.DONE;
-                }
-            } else {
-                taskStatus = Status.NEW;
-            }
-        }
-        // return taskStatus;
+               }
+           }
+       } else {
+            epicSub.clear();
+            taskStatus = Status.NEW;
+       }
+
 
     }
 
