@@ -35,12 +35,8 @@ public class TaskManager {
         listOfSubTask.clear();
 
         for(Epic epic : listOfEpic.values()){
-
-            System.out.println(epic);
             epic.clearEpicSub();
-            System.out.println(epic);
             epic.setStatus(Status.NEW);
-
         }
         nulId();
     }
