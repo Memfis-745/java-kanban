@@ -1,5 +1,8 @@
+package tasks;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import managers.*;
 
 public class Epic extends Task{
     public ArrayList<Integer> epicSub = new ArrayList<>();
@@ -10,10 +13,18 @@ public class Epic extends Task{
     }
 
     public void setId (int setEpicId){
-        this.id = setEpicId;
+          this.id = setEpicId;
     }
-    public void setSubId (int setSubId){
-        epicSub.add(setSubId);
+    public boolean setSubId (int setSubId){
+        boolean epicSubMistake;
+        if (setSubId!=id) {
+            epicSub.add(setSubId);
+            epicSubMistake = true;
+        } else {
+            System.out.println("Ошибка наследования эпика");
+            epicSubMistake = false;
+        }
+        return epicSubMistake;
     }
     public void removeSubId(Integer subId){
         epicSub.remove(subId);
