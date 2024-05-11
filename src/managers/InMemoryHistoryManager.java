@@ -8,13 +8,14 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> history = new ArrayList<>();
     @Override
     public void addHistory(Task task){
-        if (historyId > 9) {
-
-            history.remove(0);
-            historyId--;
+        if (task!=null) {
+            if (history.size() >= 10) {
+                history.remove(0);
+            }
+            history.add(task);
+        } else {
+           System.out.println("Объект пустой");
         }
-        history.add(task);
-        historyId++;
     }
     @Override
     public List <Task> getHistory(){

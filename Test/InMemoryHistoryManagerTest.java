@@ -18,8 +18,9 @@ class InMemoryHistoryManagerTest {
         historyManager.addHistory(task);
         final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
-        assertEquals(1, history.size(), "История не пустая.");
-        assertEquals(task, history.get(0), "История не пустая.");
+        assertEquals(1, history.size(), "История пустая.");
+        assertEquals(task, history.get(0), "Задача не соответствует оригиналу.");
+
 
     }
 }
