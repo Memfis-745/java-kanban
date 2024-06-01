@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 //import tasks.Status;
 import tasks.*;
 import managers.*;
+import java.util.ArrayList;
 
 class InMemoryTaskManagerTest {
     static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
@@ -77,6 +78,18 @@ class InMemoryTaskManagerTest {
         Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
 
         assertFalse(subtask.setSubId(epic.getId()));
+    }
+
+   @Test
+    void epicDoNotSaveIdRemovedSub() { // проверка, что эпик не хранит id удаленных субтасков
+        Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
+        taskManager.addEpic(epic);
+        Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
+        taskManager.addSubTask(subtask);
+        ArrayList<Integer> subId = epic.getEpicSub();
+        assertEquals(subId.get(0), subtask.getId(), "Задачи не совпадают.");
+        taskManager.removeByIdSubtask(subtask.getId());
+        assertTrue(subId.isEmpty());
     }
 
     @Test

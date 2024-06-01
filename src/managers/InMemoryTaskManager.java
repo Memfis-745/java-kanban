@@ -18,6 +18,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     private final HistoryManager historyManager;
     public InMemoryTaskManager(HistoryManager historyManager) {
+
         this.historyManager = historyManager;
     }
 
@@ -234,13 +235,17 @@ public class InMemoryTaskManager implements TaskManager {
        return historyManager.getHistory();
 
     }
+    @Override
+    public void remove(int id){
+         historyManager.remove(id);
 
+    }
 
     public int getId() {    // счетчик
         id++;
         int tempId = id;
         if (reviewId(tempId)){
-            while(listOfTask.containsKey(tempId) || listOfTask.containsKey(tempId)||listOfTask.containsKey(tempId)){
+            while(listOfTask.containsKey(tempId) || listOfEpic.containsKey(tempId)||listOfSubTask.containsKey(tempId)){
                 tempId++;
                 id =  tempId;
             }
@@ -257,7 +262,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     public boolean reviewId(int idTemp) {
 
-        return listOfTask.containsKey(idTemp) || listOfTask.containsKey(idTemp) || listOfTask.containsKey(idTemp);
+        return listOfTask.containsKey(idTemp) || listOfEpic.containsKey(idTemp) || listOfSubTask.containsKey(idTemp);
     }
 }
 
