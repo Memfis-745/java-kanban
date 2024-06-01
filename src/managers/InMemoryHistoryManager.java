@@ -113,7 +113,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
         }                                             // нет головы и нет хвоста - просто удаляем.
          hashHistory.remove(task.getId());
-         // hashHistory.values().remove(node);
+
     }
 }
 
