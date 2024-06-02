@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import managers.*;
 
-public class Epic extends Task{
+public class Epic extends Task {
     public ArrayList<Integer> epicSub = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -13,13 +13,13 @@ public class Epic extends Task{
 
     }
 
-    public void setId (int setEpicId) {
+    public void setId(int setEpicId) {
         this.id = setEpicId;
     }
 
     public boolean setSubId(int setSubId) {
         boolean epicSubMistake;
-        if (setSubId!=id) {
+        if (setSubId != id) {
             epicSub.add(setSubId);
             epicSubMistake = true;
         } else {
@@ -33,7 +33,7 @@ public class Epic extends Task{
         epicSub.remove(subId);
     }
 
-    public void clearEpicSub(){
+    public void clearEpicSub() {
         epicSub.clear();
     }
 
@@ -42,7 +42,7 @@ public class Epic extends Task{
     }
 
 
-    public void reNewEpicStatus (HashMap<Integer, Subtask> listOfSubTask) {
+    public void reNewEpicStatus(HashMap<Integer, Subtask> listOfSubTask) {
         int n = 0;
         int p = 0;
         int d = 0;
@@ -84,11 +84,11 @@ public class Epic extends Task{
 
     @Override
     public String toString() {
-        return "Epic{"+
-                "name='"+name+'\''+
-                ", description='"+description+'\''+
-                ", id="+id+
-                ", taskStatus="+taskStatus+" номера подзадач="+epicSub+
+        return "Epic{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", taskStatus=" + taskStatus + " номера подзадач=" + epicSub +
                 '}';
     }
 }

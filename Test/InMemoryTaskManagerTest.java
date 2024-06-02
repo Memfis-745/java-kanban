@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 //import tasks.Status;
 import tasks.*;
 import managers.*;
+
 import java.util.ArrayList;
 
 class InMemoryTaskManagerTest {
@@ -16,15 +17,16 @@ class InMemoryTaskManagerTest {
     int id;
     Task task = new Task("Test addNewTask", "Test addNewTask description");
     Status status = task.getStatus();
-    @BeforeEach
 
+    @BeforeEach
     void beforeEach() {
         taskManager.removeAllTask();
         taskManager.removeAllEpic();
         taskManager.removeAllSubTask();
     }
 
-    @Test // проверка двух экземпляров задачи на равенство друг другу
+    @Test
+        // проверка двух экземпляров задачи на равенство друг другу
     void taskEqualsHimself() {
         Task task1 = new Task("Test addNewTask", "Test addNewTask description");
         task1.setId(1);
@@ -36,6 +38,7 @@ class InMemoryTaskManagerTest {
         assertEquals(task1, task2, "Задачи не совпадают.");
 
     }
+
     @Test
     void taskWithSameIdEquals() { // проверка на равенство двух экземпляров задач с одинаковым id
         Task task1 = new Task("Test addNewTask", "Test addNewTask description");
@@ -48,6 +51,7 @@ class InMemoryTaskManagerTest {
         // Проверка на равенство двух задач с одинаковыми полями, но разными id
         assertEquals(savedTask, savedTaskCopy, "Задачи не совпадают.");
     }
+
     @Test
     void equalsEpicWithSameId() { // проверка на равенство двух экземпляров наследников Task с одинаковым id
         Epic epic1 = new Epic("Test addNewTask", "Test addNewTask description");
@@ -63,11 +67,11 @@ class InMemoryTaskManagerTest {
     @Test
     void EpicCantBeHimSubepic() { // проверка, что Эпик нельзя добавить в себя в виде подзадачи
         Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
-       taskManager.addEpic(epic);
+        taskManager.addEpic(epic);
 
-       Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
-       subtask.setId(epic.getId());
-       assertFalse(epic.setSubId(epic.getId()));
+        Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
+        subtask.setId(epic.getId());
+        assertFalse(epic.setSubId(epic.getId()));
 
     }
 
@@ -80,7 +84,7 @@ class InMemoryTaskManagerTest {
         assertFalse(subtask.setSubId(epic.getId()));
     }
 
-   @Test
+    @Test
     void epicDoNotSaveIdRemovedSub() { // проверка, что эпик не хранит id удаленных субтасков
         Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
         taskManager.addEpic(epic);
@@ -112,7 +116,8 @@ class InMemoryTaskManagerTest {
 
     }
 
-    @Test // проверка, что здачи с заданным и сгенерированным id не противоречат
+    @Test
+        // проверка, что здачи с заданным и сгенерированным id не противоречат
     void automaticAndHandleSetId() {
         Task task1 = new Task("Test addNewTask", "Test addNewTask description");
         int taskId1 = taskManager.addTask(task1);
