@@ -10,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     int hashIdTail = 0;
     int hashId = 0;
     public List<Task> history = new ArrayList<>();
-    Node prev = new Node(null, null, null);
+    Node prev;  //= new Node(null, null, null);
 
     @Override
     public void addHistory(Task task) {
