@@ -11,7 +11,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         taskManager.addTask(new Task("Задача-1", "Описание задачи-1"));
         taskManager.addTask(new Task("Задача-2", "Описание задачи-2"));
         Integer epicId1 = taskManager.addEpic(new Epic("эпик-3", "описание эпика-3"));
