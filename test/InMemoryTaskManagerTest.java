@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import tasks.*;
 import managers.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 class InMemoryTaskManagerTest {
@@ -19,7 +20,7 @@ class InMemoryTaskManagerTest {
     Status status = task.getStatus();
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws IOException {
         taskManager.removeAllTask();
         taskManager.removeAllEpic();
         taskManager.removeAllSubTask();
@@ -40,7 +41,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void taskWithSameIdEquals() { // проверка на равенство двух экземпляров задач с одинаковым id
+    void taskWithSameIdEquals() throws IOException { // проверка на равенство двух экземпляров задач с одинаковым id
         Task task1 = new Task("Test addNewTask", "Test addNewTask description");
         task1.setHandId(1);
         taskManager.addTask(task1);
@@ -65,7 +66,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void EpicCantBeHimSubepic() { // проверка, что Эпик нельзя добавить в себя в виде подзадачи
+    void EpicCantBeHimSubepic() throws IOException { // проверка, что Эпик нельзя добавить в себя в виде подзадачи
         Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
         taskManager.addEpic(epic);
 
@@ -76,7 +77,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void subtaskCantBeHimEpic() { // проверка, что субтаск нельзя нельзя сделать своим эпиком
+    void subtaskCantBeHimEpic() throws IOException { // проверка, что субтаск нельзя нельзя сделать своим эпиком
         Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
         taskManager.addEpic(epic);
         Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
@@ -85,7 +86,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void epicDoNotSaveIdRemovedSub() { // проверка, что эпик не хранит id удаленных субтасков
+    void epicDoNotSaveIdRemovedSub() throws IOException { // проверка, что эпик не хранит id удаленных субтасков
         Epic epic = new Epic("Test addNewTask", "Test addNewTask description");
         taskManager.addEpic(epic);
         Subtask subtask = new Subtask("подзадача-5", "первая подзадача к эпику 3", epic.getId());
@@ -97,7 +98,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void taskManageraAddAndReturnTask() { // проверка, что InMemoryTaskManager добавляет и возвращает задачи
+    void taskManageraAddAndReturnTask() throws IOException { // проверка, что InMemoryTaskManager добавляет и возвращает задачи
         Task task = new Task("Test addNewTask", "Test addNewTask description");
         int id = taskManager.addTask(task);
         final Task savedTask = taskManager.showTask(id);
@@ -118,7 +119,7 @@ class InMemoryTaskManagerTest {
 
     @Test
         // проверка, что здачи с заданным и сгенерированным id не противоречат
-    void automaticAndHandleSetId() {
+    void automaticAndHandleSetId() throws IOException {
         Task task1 = new Task("Test addNewTask", "Test addNewTask description");
         int taskId1 = taskManager.addTask(task1);
         Task task2 = new Task("Test addNewTask", "Test addNewTask description");

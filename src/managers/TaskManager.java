@@ -1,47 +1,55 @@
 package managers;
 import tasks.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    ArrayList<Task> getAllTask();
+    ArrayList<Task> getAllTask() throws IOException;
 
-    ArrayList<Epic> getAllEpic();
+   /* static Task fromStringValue(String value) {
+        return null;
+    }*/
 
-    ArrayList<Subtask> getAllSubTask();
+    ArrayList<Epic> getAllEpic() throws IOException;
 
-    void removeAllTask();
+    ArrayList<Subtask> getAllSubTask() throws IOException;
 
-    void removeAllEpic();
+    void removeAllTask() throws IOException;
 
-    void removeAllSubTask();
+    void removeAllEpic() throws IOException;
 
-    Task showTask(int id);
+    void removeAllSubTask() throws IOException;
 
-    Epic showEpic(int id);
+    Task showTask(int id) throws IOException;
 
-    Subtask showSubTask(int id);
+    Epic showEpic(int id) throws IOException;
 
-    int addTask(Task task);
+    Subtask showSubTask(int id) throws IOException;
 
-    Integer addEpic(Epic epic);
+    int addTask(Task task) throws IOException;
 
-    int addSubTask(Subtask subtask);
+    Integer addEpic(Epic epic) throws IOException;
 
-    void updateTask(int id, String status);
+    int addSubTask(Subtask subtask) throws IOException;
 
-    void updateSubTask(int id, String status);
+    void updateTask(int id, String status) throws IOException;
 
-    void removeByIdTask(int id);
+    void updateSubTask(int id, String status) throws IOException;
 
-    void removeByIdEpic(int id);
+    void removeByIdTask(int id) throws IOException;
 
-    void removeByIdSubtask(int id);
+    void removeByIdEpic(int id) throws IOException;
 
-    ArrayList<Subtask> showSubtask(int id);
+    void removeByIdSubtask(int id) throws IOException;
 
-    public List<Task> getHistory();
+    ArrayList<Subtask> showSubtask(int id) throws IOException;
 
-   public void remove(int id);
+    public List<Task> getHistory() throws IOException;
+
+   public void remove(int id) throws IOException;
+
+
+
 }
