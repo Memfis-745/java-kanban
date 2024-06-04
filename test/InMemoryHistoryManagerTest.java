@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import tasks.*;
 import managers.*;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,7 @@ class InMemoryHistoryManagerTest {
     InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
     @Test
-    void add() { // Проверка, что задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных.
+    void add() throws IOException { // Проверка, что задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных.
         Task task = new Task("Test addNewTask", "Test addNewTask description");
         task.setStatus(Status.NEW); // тестовый коммент
 
@@ -26,7 +27,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void remove() { // Проверка, удаления истории по id
+    void remove() throws IOException { // Проверка, удаления истории по id
         Task task = new Task("Test addNewTask", "Test addNewTask description");
         Task task2 = new Task("Test addNewTask-2", "Test addNewTask description-2");
         Task task3 = new Task("Test addNewTask-3", "Test addNewTask description-3");
