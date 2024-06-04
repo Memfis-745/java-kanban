@@ -14,7 +14,7 @@ class InMemoryHistoryManagerTest {
     @Test
     void add() { // Проверка, что задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных.
         Task task = new Task("Test addNewTask", "Test addNewTask description");
-        task.setStatus(Status.NEW);
+        task.setStatus(Status.NEW); // тестовый коммент
 
         taskManager.addTask(task);
 

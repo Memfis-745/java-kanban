@@ -12,7 +12,7 @@ import java.util.ArrayList;
 class InMemoryTaskManagerTest {
     static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
     String name;
-    String description;
+    String description; // снова тесто
 
     int id;
     Task task = new Task("Test addNewTask", "Test addNewTask description");
