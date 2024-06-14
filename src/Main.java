@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+
+
 //import managers.InMemoryTaskManager;
 import managers.*;
 import tasks.*;
@@ -8,8 +8,8 @@ import tasks.*;
 public class Main {
 
     static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
 
         taskManager.addTask(new Task("Задача-1", "Описание задачи-1"));
         taskManager.addTask(new Task("Задача-2", "Описание задачи-2"));
@@ -22,10 +22,9 @@ public class Main {
         printTask();
 
 
-
         // открыть задачу, эпик , подзадачу по id
         // int inTask = 1;
-
+        System.out.println("\n");
         System.out.println("Показать задачи, подзадачи и эпики :");
         Task task = taskManager.showTask(1);
         System.out.println(task);
@@ -36,24 +35,28 @@ public class Main {
 
 
         // смена статуса
+        System.out.println("\n");
         System.out.println("Смена статуса задач, подзадач и эпиков :");
-        // int idStatus = 1;
+
 
         taskManager.updateTask(1, "IN_PROGRESS");
         taskManager.updateSubTask(5, "DONE");
         taskManager.updateSubTask(6, "DONE");
         printTask();
 
+        System.out.println("\n");
         System.out.println("Показать подзадачи эпика 4"); // показать подзадачи эпика
 
         ArrayList<Subtask> sub = taskManager.showSubtask(4);
         for (Subtask s : sub) {
             System.out.println(s);
         }
+        System.out.println("\n");
         System.out.println("Показать историю вызовов");
-       taskManager.showTask(1);
-       taskManager.showEpic(3);
-       taskManager.showSubTask(5);
+        taskManager.showTask(1);
+        taskManager.showTask(1);
+        taskManager.showEpic(3);
+        taskManager.showSubTask(5);
         taskManager.showSubTask(6);
         taskManager.showSubTask(7);
         taskManager.showTask(2);
@@ -64,7 +67,15 @@ public class Main {
         taskManager.showSubTask(7);
         taskManager.showTask(2);
 
-        for(Task hist : taskManager.getHistory()) {
+        for (Task hist : taskManager.getHistory()) {
+            System.out.println(hist);
+        }
+
+        System.out.println("Удаление из истории по id: ");
+        taskManager.remove(5);
+
+
+        for (Task hist : taskManager.getHistory()) {
             System.out.println(hist);
         }
 
@@ -75,13 +86,13 @@ public class Main {
         printTask();
 
 
-
         // удалить все
         System.out.println("Удалить все задачи:");
         taskManager.removeAllTask();
         taskManager.removeAllEpic();
         taskManager.removeAllSubTask();
         printTask();
+
 
     }
 

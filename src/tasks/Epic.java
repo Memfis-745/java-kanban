@@ -1,10 +1,11 @@
 package tasks;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import managers.*;
 
-public class Epic extends Task{
+public class Epic extends Task {
     public ArrayList<Integer> epicSub = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -12,12 +13,13 @@ public class Epic extends Task{
 
     }
 
-    public void setId (int setEpicId){
-          this.id = setEpicId;
+    public void setId(int setEpicId) {
+        this.id = setEpicId;
     }
-    public boolean setSubId (int setSubId){
+
+    public boolean setSubId(int setSubId) {
         boolean epicSubMistake;
-        if (setSubId!=id) {
+        if (setSubId != id) {
             epicSub.add(setSubId);
             epicSubMistake = true;
         } else {
@@ -26,55 +28,56 @@ public class Epic extends Task{
         }
         return epicSubMistake;
     }
-    public void removeSubId(Integer subId){
+
+    public void removeSubId(Integer subId) {
         epicSub.remove(subId);
     }
 
-    public void clearEpicSub(){
+    public void clearEpicSub() {
         epicSub.clear();
     }
 
-    public ArrayList<Integer> getEpicSub(){
+    public ArrayList<Integer> getEpicSub() {
         return epicSub;
     }
 
 
-    public void reNewEpicStatus (HashMap<Integer, Subtask> listOfSubTask){
+    public void reNewEpicStatus(HashMap<Integer, Subtask> listOfSubTask) {
         int n = 0;
         int p = 0;
         int d = 0;
-       if (!listOfSubTask.isEmpty()) {
-           for (Integer epic : epicSub) {
-               if (epic != null) {
-                   Subtask subtask = listOfSubTask.get(epic);
+        if (!listOfSubTask.isEmpty()) {
+            for (Integer epic : epicSub) {
+                if (epic != null) {
+                    Subtask subtask = listOfSubTask.get(epic);
 
-                   switch (subtask.getStatus()) {
-                       case NEW:
-                           n++;
-                           break;
-                       case IN_PROGRESS:
-                           p++;
-                           break;
-                       case DONE:
-                           d++;
-                           break;
-                       default:
-                           break;
-                   }
-                   if (epicSub.size() == n) {
-                       taskStatus = Status.NEW;
-                   } else if (epicSub.size() == p) {
-                       taskStatus = Status.IN_PROGRESS;
-                   } else if (epicSub.size() == d) {
-                       taskStatus = Status.DONE;
-                   }
+                    switch (subtask.getStatus()) {
+                        case NEW:
+                            n++;
+                            break;
+                        case IN_PROGRESS:
+                            p++;
+                            break;
+                        case DONE:
+                            d++;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (epicSub.size() == n) {
+                        taskStatus = Status.NEW;
+                    } else if (epicSub.size() == p) {
+                        taskStatus = Status.IN_PROGRESS;
+                    } else if (epicSub.size() == d) {
+                        taskStatus = Status.DONE;
+                    }
 
-               }
-           }
-       } else {
+                }
+            }
+        } else {
             epicSub.clear();
             taskStatus = Status.NEW;
-       }
+        }
 
 
     }
@@ -85,7 +88,7 @@ public class Epic extends Task{
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", taskStatus=" + taskStatus + " номера подзадач=" +epicSub+
+                ", taskStatus=" + taskStatus + " номера подзадач=" + epicSub +
                 '}';
     }
 }

@@ -1,4 +1,5 @@
 package managers;
+
 import tasks.*;
 import tasks.Status;
 
@@ -9,7 +10,6 @@ import java.util.HashMap;
 public class InMemoryTaskManager implements TaskManager {
 
     public static Integer id = 0;
-    public static Integer historyId = 0;
     final HashMap<Integer, Task> listOfTask = new HashMap<>();
     final HashMap<Integer, Epic> listOfEpic = new HashMap<>();
     final HashMap<Integer, Subtask> listOfSubTask = new HashMap<>();
@@ -17,22 +17,26 @@ public class InMemoryTaskManager implements TaskManager {
     // public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
     private final HistoryManager historyManager;
+
     public InMemoryTaskManager(HistoryManager historyManager) {
+
         this.historyManager = historyManager;
     }
 
     @Override                      // 1.1 Возвращает список задач
-    public ArrayList<Task> getAllTask() { // 1. Вывести список всех задач"
+    public ArrayList<Task> getAllTask() {
         return new ArrayList<>(listOfTask.values());
     }
 
     @Override                       // 1.2 Возвращает список эпиков
     public ArrayList<Epic> getAllEpic() { // 1. Вывести список всех задач"
+
         return new ArrayList<>(listOfEpic.values());
     }
 
     @Override                       // 1.1 Возвращает список подзазач
     public ArrayList<Subtask> getAllSubTask() { // 1. Вывести список всех задач"
+
         return new ArrayList<>(listOfSubTask.values());
     }
 
@@ -85,7 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
         task.setStatus(Status.NEW);
 
         int taskId = task.getId();
-        if(reviewId(taskId)) {
+        if (reviewId(taskId)) {
             System.out.println("Ошибка ручной установки Id");
             taskId = id;
         }
@@ -102,7 +106,7 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setStatus(Status.NEW);
 
         int epicId = epic.getId();
-        if(reviewId(epicId)) {
+        if (reviewId(epicId)) {
             System.out.println("Ошибка ручной установки Id");
             epicId = id;
         }
@@ -118,7 +122,7 @@ public class InMemoryTaskManager implements TaskManager {
         subtask.setStatus(Status.NEW);
 
         int subtId = subtask.getId();
-        if(reviewId(subtId)) {
+        if (reviewId(subtId)) {
             System.out.println("Ошибка ручной установки Id");
             subtId = subId;
         }
@@ -230,19 +234,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory(){
-       return historyManager.getHistory();
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
 
     }
 
+    @Override
+    public void remove(int id) {
+        historyManager.remove(id);
+
+    }
 
     public int getId() {    // счетчик
         id++;
         int tempId = id;
-        if (reviewId(tempId)){
-            while(listOfTask.containsKey(tempId) || listOfTask.containsKey(tempId)||listOfTask.containsKey(tempId)){
+        if (reviewId(tempId)) {
+            while (listOfTask.containsKey(tempId) || listOfEpic.containsKey(tempId) || listOfSubTask.containsKey(tempId)) {
                 tempId++;
-                id =  tempId;
+                id = tempId;
             }
         }
         return id;
@@ -257,7 +266,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     public boolean reviewId(int idTemp) {
 
-        return listOfTask.containsKey(idTemp) || listOfTask.containsKey(idTemp) || listOfTask.containsKey(idTemp);
+        return listOfTask.containsKey(idTemp) || listOfEpic.containsKey(idTemp) || listOfSubTask.containsKey(idTemp);
     }
 }
 

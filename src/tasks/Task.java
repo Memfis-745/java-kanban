@@ -1,5 +1,7 @@
 package tasks;
+
 import java.util.Objects;
+
 import managers.*;
 
 public class Task {
@@ -25,6 +27,7 @@ public class Task {
     public void setStatus(Status status) {
         this.taskStatus = status;
     }
+
     public Integer getId() {
         if (handId == null) {
             return id;
@@ -32,9 +35,11 @@ public class Task {
             return handId;
         }
     }
+
     public Status getStatus() {
         return taskStatus;
     }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -44,6 +49,7 @@ public class Task {
                 ", taskStatus=" + taskStatus +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

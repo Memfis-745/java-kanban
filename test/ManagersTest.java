@@ -12,7 +12,7 @@ class ManagersTest {
     @Test
     void managerReturnNotNullHistory() { // менеджер возвращает ненулевой экземпляр класса InMemoryHistory
         assertNotNull(Managers.getDefaultHistory());
-    }
+    } // тест
 
 
 }

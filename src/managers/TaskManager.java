@@ -42,4 +42,6 @@ public interface TaskManager {
     ArrayList<Subtask> showSubtask(int id);
 
     public List<Task> getHistory();
+
+   public void remove(int id);
 }
