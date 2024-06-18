@@ -9,17 +9,16 @@ import tasks.*;
 
 public class Main {
 
-   // static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
- // static final FileBackedTaskManager taskManager = (FileBackedTaskManager) Managers.getDefault();
-
+    // static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
+    // static final FileBackedTaskManager taskManager = (FileBackedTaskManager) Managers.getDefault();
 
 
     public static void main(String[] args) throws IOException {
         final File file = new File("taskFile.csv");
-       final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
+        final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
 
 
-       // fileManagerOut.readFile();
+        // fileManagerOut.readFile();
         fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1"));
         fileManagerOut.addTask(new Task("Задача-2", "Описание задачи-2"));
         Integer epicId1 = fileManagerOut.addEpic(new Epic("эпик-3", "описание эпика-3"));
@@ -28,7 +27,7 @@ public class Main {
         fileManagerOut.addSubTask(new Subtask("подзадача-6", "вторая подзадача к эпику 3", epicId1));
         fileManagerOut.addSubTask(new Subtask("подзадача-7", "первая подзадача к эпику 4", epicId2));
 
-       printTask(fileManagerOut);
+        printTask(fileManagerOut);
 
         FileBackedTaskManager fileManagerIn = FileBackedTaskManager.loadFromFile(file);
         System.out.println("Передача управления : ");
@@ -71,7 +70,7 @@ public class Main {
         fileManagerIn.updateTask(1, "IN_PROGRESS");
         fileManagerIn.updateSubTask(5, "DONE");
         fileManagerIn.updateSubTask(6, "DONE");
-       printTask(fileManagerIn);
+        printTask(fileManagerIn);
 
         System.out.println("\n");
         System.out.println("Показать подзадачи эпика 4"); // показать подзадачи эпика
@@ -112,7 +111,7 @@ public class Main {
         fileManagerIn.removeByIdTask(2);
         fileManagerIn.removeByIdEpic(3);
         fileManagerIn.removeByIdSubtask(7);
-      printTask(fileManagerIn);
+        printTask(fileManagerIn);
 
 
         // удалить все
@@ -120,13 +119,13 @@ public class Main {
         fileManagerIn.removeAllTask();
         fileManagerIn.removeAllEpic();
         fileManagerIn.removeAllSubTask();
-      //  printTask();
+        //  printTask();
 
 
     }
 
 
-   public static void printTask(FileBackedTaskManager fileManagerIn) throws IOException {
+    public static void printTask(FileBackedTaskManager fileManagerIn) throws IOException {
         System.out.println("Список задач: ");
         for (Task task : fileManagerIn.getAllTask()) {
             System.out.println(task);

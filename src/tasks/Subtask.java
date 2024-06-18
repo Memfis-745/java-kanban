@@ -36,7 +36,7 @@ public class Subtask extends Epic {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", taskStatus=" + taskStatus + ", epicId "+ epicId +
+                ", taskStatus=" + taskStatus + ", epicId " + epicId +
                 '}';
     }
 }
