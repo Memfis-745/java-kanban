@@ -9,16 +9,12 @@ import tasks.*;
 
 public class Main {
 
-    // static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
-    // static final FileBackedTaskManager taskManager = (FileBackedTaskManager) Managers.getDefault();
 
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         final File file = new File("taskFile.csv");
         final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
 
 
-        // fileManagerOut.readFile();
         fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1"));
         fileManagerOut.addTask(new Task("Задача-2", "Описание задачи-2"));
         Integer epicId1 = fileManagerOut.addEpic(new Epic("эпик-3", "описание эпика-3"));
@@ -121,11 +117,9 @@ public class Main {
         fileManagerIn.removeAllSubTask();
         //  printTask();
 
-
     }
 
-
-    public static void printTask(FileBackedTaskManager fileManagerIn) throws IOException {
+    public static void printTask(FileBackedTaskManager fileManagerIn) {
         System.out.println("Список задач: ");
         for (Task task : fileManagerIn.getAllTask()) {
             System.out.println(task);

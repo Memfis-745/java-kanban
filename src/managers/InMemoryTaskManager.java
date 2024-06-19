@@ -21,44 +21,38 @@ public class InMemoryTaskManager implements TaskManager {
     HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override                      // 1.1 Возвращает список задач
-    public ArrayList<Task> getAllTask() throws IOException {
+    public ArrayList<Task> getAllTask() {
         return new ArrayList<>(listOfTask.values());
     }
 
 
-
-/*
-  static Task fromStringValue(String value) {
-      return null;
-  }*/
-
     @Override                       // 1.2 Возвращает список эпиков
-    public ArrayList<Epic> getAllEpic() throws IOException { // 1. Вывести список всех задач"
+    public ArrayList<Epic> getAllEpic() { // 1. Вывести список всех задач"
 
         return new ArrayList<>(listOfEpic.values());
     }
 
     @Override                       // 1.1 Возвращает список подзазач
-    public ArrayList<Subtask> getAllSubTask() throws IOException { // 1. Вывести список всех задач"
+    public ArrayList<Subtask> getAllSubTask() { // 1. Вывести список всех задач"
 
         return new ArrayList<>(listOfSubTask.values());
     }
 
     @Override
-    public void removeAllTask() throws IOException { // 2.1. Удалить все задачи"
+    public void removeAllTask() { // 2.1. Удалить все задачи"
         listOfTask.clear();
         nulId();
     }
 
     @Override
-    public void removeAllEpic() throws IOException { // 2.2 Удалить все эпики
+    public void removeAllEpic() { // 2.2 Удалить все эпики
         listOfEpic.clear();
         listOfSubTask.clear();
         nulId();
     }
 
     @Override
-    public void removeAllSubTask() throws IOException { // 2.3 Удалить все подзадачи"
+    public void removeAllSubTask() { // 2.3 Удалить все подзадачи"
         listOfSubTask.clear();
 
         for (Epic epic : listOfEpic.values()) {
@@ -69,25 +63,25 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override                           // 3.1 Возвращает задачу по id
-    public Task showTask(int id) throws IOException {
+    public Task showTask(int id) {
         historyManager.addHistory(listOfTask.get(id));
         return listOfTask.get(id);
     }
 
     @Override                            // 3.2 Возвращает эпик по id
-    public Epic showEpic(int id) throws IOException {
+    public Epic showEpic(int id) {
         historyManager.addHistory(listOfEpic.get(id));
         return listOfEpic.get(id);
     }
 
     @Override                             // 3.3 Возвращает подзадачу по id
-    public Subtask showSubTask(int id) throws IOException { //
+    public Subtask showSubTask(int id) { //
         historyManager.addHistory(listOfSubTask.get(id));
         return listOfSubTask.get(id);
     }
 
     @Override
-    public int addTask(Task task) throws IOException {  // 4.1    создание задачи
+    public int addTask(Task task) {  // 4.1    создание задачи
         int id = getId();
         task.setId(id);
         task.setStatus(Status.NEW);
@@ -104,7 +98,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Integer addEpic(Epic epic) throws IOException {   // 4.2    создание эпика
+    public Integer addEpic(Epic epic) {   // 4.2    создание эпика
         int id = getId();
         epic.setId(id);
         epic.setStatus(Status.NEW);
@@ -119,7 +113,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public int addSubTask(Subtask subtask) throws IOException { // 4.3    создание подзадачи
+    public int addSubTask(Subtask subtask) { // 4.3    создание подзадачи
         int subId = getId();
         subtask.setSubId(id);
         int epicId = subtask.getEpicId();
@@ -138,7 +132,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(int id, String status) throws IOException { // 5.1 изменения статуса задачи
+    public void updateTask(int id, String status) { // 5.1 изменения статуса задачи
         if (listOfTask.containsKey(id)) {
             Task task = listOfTask.get(id);
             switch (Status.valueOf(status)) {
@@ -159,7 +153,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override                                           // 5.2 изменение статуса подзадачи
-    public void updateSubTask(int id, String status) throws IOException {
+    public void updateSubTask(int id, String status) {
 
         if (listOfSubTask.containsKey(id)) {
 
@@ -193,7 +187,7 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-    public void removeByIdTask(int id) throws IOException {   // 6.1 Удалить задачу по идентификатору
+    public void removeByIdTask(int id) {   // 6.1 Удалить задачу по идентификатору
 
         if (listOfTask.containsKey(id)) {
             listOfTask.remove(id);
@@ -201,7 +195,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeByIdEpic(int id) throws IOException {    // 6.2 Удалить эпик по идентификатору
+    public void removeByIdEpic(int id) {    // 6.2 Удалить эпик по идентификатору
         if (listOfEpic.containsKey(id)) {
             Epic epic = listOfEpic.get(id);
             for (int e : epic.getEpicSub()) {
@@ -212,7 +206,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeByIdSubtask(int id) throws IOException {     // 6.3 Удалить подзадачу по идентификатору
+    public void removeByIdSubtask(int id) {     // 6.3 Удалить подзадачу по идентификатору
         if (listOfSubTask.containsKey(id)) {
             Subtask subtask = listOfSubTask.get(id);
             int epicId = subtask.getEpicId();
@@ -224,7 +218,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Subtask> showSubtask(int id) throws IOException { // 7 показать подзадачи эпика
+    public ArrayList<Subtask> showSubtask(int id) { // 7 показать подзадачи эпика
 
         ArrayList<Subtask> sub = null;
         if (listOfEpic.containsKey(id)) {
@@ -240,13 +234,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory() throws IOException {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
 
     }
 
     @Override
-    public void remove(int id) throws IOException {
+    public void remove(int id) {
         historyManager.remove(id);
 
     }

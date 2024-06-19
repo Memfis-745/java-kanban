@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import tasks.Status;
 import tasks.Task;
+import tasks.Epic;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,6 @@ class FileBackedTaskManagerTest {
 
     @Test
     void writeEmptyFile() throws IOException {
-        //  final File file = new File("taskFile.csv");
         File file = File.createTempFile("taskFileTest.csv", null);
         final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
         fileManagerOut.save();
@@ -34,10 +34,6 @@ class FileBackedTaskManagerTest {
         }
 
     }
-/*
-    @Test
-    void testToString() {
-    }*/
 
     @Test
     void loadFromEmptyFile() throws IOException {
@@ -49,114 +45,21 @@ class FileBackedTaskManagerTest {
         System.out.println("Чтение из пустого файла: " + strings);
 
     }
-}
 
 
+    @Test
+    void fromTaskToStringValueAndBackAgain() throws IOException {
 
-
-   /* @Test
-
-    void loadFromString() throws IOException {
         File file = File.createTempFile("taskFileTest.csv", null);
         final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
+        Epic epic1 = new Epic("Задача-1", "Описание-1");
+        epic1.setId(2);
+        epic1.setStatus(Status.NEW);
 
-        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1"))
+        String stringToTask = fileManagerOut.toString(epic1);
+        Epic epic2 = (Epic) fileManagerOut.fromStringValue(stringToTask);
+        assertEquals(epic1, epic2, "Задачи не совпадают.");
 
-        String st = fileManagerOut.toString();
-
-        List<String> strings = null;
-        strings = Files.readAllLines(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
-        strings[1];
-        System.out.println("Чтение из пустого файла: " + strings);
-        if (strings == null) {
-            System.out.println("Чтение из устого файла: " + file.getName());
-
-    }}*/
-
-/*
-    @Test
-    void statik() {
     }
-
-    @Test
-    void getAllTask() {
-    }
-
-    @Test
-    void getAllEpic() {
-    }
-
-    @Test
-    void getAllSubTask() {
-    }
-
-    @Test
-    void removeAllTask() {
-    }
-
-    @Test
-    void removeAllEpic() {
-    }
-
-    @Test
-    void removeAllSubTask() {
-    }
-
-    @Test
-    void showTask() {
-    }
-
-    @Test
-    void showEpic() {
-    }
-
-    @Test
-    void showSubTask() {
-    }
-
-    @Test
-    void addTask() {
-    }
-
-    @Test
-    void addEpic() {
-    }
-
-    @Test
-    void addSubTask() {
-    }
-
-    @Test
-    void updateTask() {
-    }
-
-    @Test
-    void updateSubTask() {
-    }
-
-    @Test
-    void removeByIdTask() {
-    }
-
-    @Test
-    void removeByIdEpic() {
-    }
-
-    @Test
-    void removeByIdSubtask() {
-    }
-
-    @Test
-    void showSubtask() {
-    }
-
-    @Test
-    void getHistory() {
-    }
-
-    @Test
-    void remove() {
 
 }
-
-} */
