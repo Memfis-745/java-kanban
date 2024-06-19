@@ -1,55 +1,52 @@
 package managers;
+
 import tasks.*;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    ArrayList<Task> getAllTask() throws IOException;
+    ArrayList<Task> getAllTask();
 
-   /* static Task fromStringValue(String value) {
-        return null;
-    }*/
 
-    ArrayList<Epic> getAllEpic() throws IOException;
+    ArrayList<Epic> getAllEpic();
 
-    ArrayList<Subtask> getAllSubTask() throws IOException;
+    ArrayList<Subtask> getAllSubTask();
 
-    void removeAllTask() throws IOException;
+    void removeAllTask();
 
-    void removeAllEpic() throws IOException;
+    void removeAllEpic();
 
-    void removeAllSubTask() throws IOException;
+    void removeAllSubTask();
 
-    Task showTask(int id) throws IOException;
+    Task showTask(int id);
 
-    Epic showEpic(int id) throws IOException;
+    Epic showEpic(int id);
 
-    Subtask showSubTask(int id) throws IOException;
+    Subtask showSubTask(int id);
 
-    int addTask(Task task) throws IOException;
+    int addTask(Task task);
 
-    Integer addEpic(Epic epic) throws IOException;
+    Integer addEpic(Epic epic);
 
-    int addSubTask(Subtask subtask) throws IOException;
+    int addSubTask(Subtask subtask);
 
-    void updateTask(int id, String status) throws IOException;
+    void updateTask(int id, String status);
 
-    void updateSubTask(int id, String status) throws IOException;
+    void updateSubTask(int id, String status);
 
-    void removeByIdTask(int id) throws IOException;
+    void removeByIdTask(int id);
 
-    void removeByIdEpic(int id) throws IOException;
+    void removeByIdEpic(int id);
 
-    void removeByIdSubtask(int id) throws IOException;
+    void removeByIdSubtask(int id);
 
-    ArrayList<Subtask> showSubtask(int id) throws IOException;
+    ArrayList<Subtask> showSubtask(int id);
 
-    public List<Task> getHistory() throws IOException;
+    List<Task> getHistory();
 
-   public void remove(int id) throws IOException;
-
+    void remove(int id);
 
 
 }

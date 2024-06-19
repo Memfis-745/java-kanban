@@ -4,7 +4,7 @@ import tasks.Epic;
 import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
-import tasks.TypeTask;
+
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -64,7 +64,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
-        List<String> strings = null;
+        List<String> strings;
 
         try {
             strings = Files.readAllLines(Paths.get("taskFile.csv"), StandardCharsets.UTF_8);
