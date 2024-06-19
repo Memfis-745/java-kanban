@@ -4,7 +4,7 @@ import managers.*;
 
 public class Subtask extends Epic {
     int epicId;
-    TypeTask SUBTASK;
+
 
     public Subtask(String name, String description, int epicId) {
         super(name, description);
