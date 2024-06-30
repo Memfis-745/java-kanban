@@ -3,6 +3,7 @@ package managers;
 import tasks.*;
 import tasks.Status;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -16,17 +17,14 @@ public class InMemoryTaskManager implements TaskManager {
     // public List<Task> history = new ArrayList<>();
     // public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
-    private final HistoryManager historyManager;
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
-
-        this.historyManager = historyManager;
-    }
+    HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override                      // 1.1 Возвращает список задач
     public ArrayList<Task> getAllTask() {
         return new ArrayList<>(listOfTask.values());
     }
+
 
     @Override                       // 1.2 Возвращает список эпиков
     public ArrayList<Epic> getAllEpic() { // 1. Вывести список всех задач"
@@ -174,7 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
                 default:
                     System.out.println("Ошибка");
             }
+
             Epic epic = listOfEpic.get(epicId);
+
             epic.reNewEpicStatus(listOfSubTask);
             listOfEpic.put(epicId, epic);    // обновляем статус эпика.
 

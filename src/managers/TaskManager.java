@@ -1,11 +1,14 @@
 package managers;
+
 import tasks.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
     ArrayList<Task> getAllTask();
+
 
     ArrayList<Epic> getAllEpic();
 
@@ -41,7 +44,9 @@ public interface TaskManager {
 
     ArrayList<Subtask> showSubtask(int id);
 
-    public List<Task> getHistory();
+    List<Task> getHistory();
 
-   public void remove(int id);
+    void remove(int id);
+
+
 }

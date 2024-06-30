@@ -4,6 +4,10 @@ import java.util.Objects;
 
 import managers.*;
 
+import tasks.TypeTask;
+
+import tasks.TypeTask.*;
+
 public class Task {
     public String name;
     public String description;
@@ -11,9 +15,15 @@ public class Task {
     public Integer handId;
     public Status taskStatus;
 
+
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+
+    public TypeTask getType() {
+        return TypeTask.TASK;
     }
 
     public void setId(int id) {

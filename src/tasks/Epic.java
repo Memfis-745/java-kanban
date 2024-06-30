@@ -6,6 +6,7 @@ import java.util.HashMap;
 import managers.*;
 
 public class Epic extends Task {
+
     public ArrayList<Integer> epicSub = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -39,6 +40,10 @@ public class Epic extends Task {
 
     public ArrayList<Integer> getEpicSub() {
         return epicSub;
+    }
+
+    public TypeTask getType() {
+        return TypeTask.EPIC;
     }
 
 
