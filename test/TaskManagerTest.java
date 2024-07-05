@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.testng.AssertJUnit.assertNull;
 import static tasks.Status.*;
 
 abstract class TaskManagerTest<T extends TaskManager> {
