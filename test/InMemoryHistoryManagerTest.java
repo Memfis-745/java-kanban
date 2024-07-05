@@ -4,6 +4,8 @@ import tasks.*;
 import managers.*;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +16,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void add() throws IOException { // Проверка, что задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных.
-        Task task = new Task("Test addNewTask", "Test addNewTask description");
+        Task task = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
         task.setStatus(Status.NEW); // тестовый коммент
 
         taskManager.addTask(task);
@@ -28,9 +30,9 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void remove() throws IOException { // Проверка, удаления истории по id
-        Task task = new Task("Test addNewTask", "Test addNewTask description");
-        Task task2 = new Task("Test addNewTask-2", "Test addNewTask description-2");
-        Task task3 = new Task("Test addNewTask-3", "Test addNewTask description-3");
+        Task task = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
+        Task task2 = new Task("Задача-2", "Описание задачи-2", Duration.ofMinutes(120), LocalDateTime.of(2024, 2, 1, 0, 0));
+        Task task3 = new Task("Задача-3", "Описание задачи-3", Duration.ofMinutes(120), LocalDateTime.of(2024, 3, 1, 0, 0));
         task.setStatus(Status.NEW);
         task2.setStatus(Status.NEW);
         task3.setStatus(Status.NEW);
