@@ -442,6 +442,5 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     }
 
-    // assertFalse(epic.setSubId(epic.getId()));
 
 }

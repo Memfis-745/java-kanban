@@ -12,10 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     final HashMap<Integer, Task> listOfTask = new HashMap<>();
     final HashMap<Integer, Epic> listOfEpic = new HashMap<>();
     final HashMap<Integer, Subtask> listOfSubTask = new HashMap<>();
-    //  Map<Integer, Task> treeTask = new TreeMap<>((task1, task2) -> task1.getStart().compareTo(task1.getStart()));
 
-    // public List<Task> history = new ArrayList<>();
-    // public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
     Comparator<Task> userComparator = Comparator.comparing(Task::getStart);
     Set<Task> taskTreeSet = new TreeSet<>(userComparator);
     HistoryManager historyManager = Managers.getDefaultHistory();
@@ -27,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override                       // 1.2 Возвращает список эпиков
-    public ArrayList<Epic> getAllEpic() { // 1. Вывести список всех задач"
+    public ArrayList<Epic> getAllEpic() {
 
         return new ArrayList<>(listOfEpic.values());
     }
@@ -37,8 +34,8 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(taskTreeSet);
     }
 
-    @Override                       // 1.1 Возвращает список подзазач
-    public ArrayList<Subtask> getAllSubTask() { // 1. Вывести список всех задач"
+    @Override                       // 1.3 Возвращает список подзазач
+    public ArrayList<Subtask> getAllSubTask() {
 
         return new ArrayList<>(listOfSubTask.values());
     }
@@ -80,7 +77,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override                             // 3.3 Возвращает подзадачу по id
-    public Subtask showSubTask(int id) { //
+    public Subtask showSubTask(int id) {
         historyManager.addHistory(listOfSubTask.get(id));
         return listOfSubTask.get(id);
     }
@@ -116,7 +113,6 @@ public class InMemoryTaskManager implements TaskManager {
             epicId = id;
         }
         listOfEpic.put(epicId, epic);
-        //taskTreeSet.add(epic);
         return epicId;
     }
 
@@ -340,27 +336,3 @@ public class InMemoryTaskManager implements TaskManager {
 
 
 
-
-
-
-/*
-    //if (task.getStart())
-      //.sorted((task1, task2) -> Task.compareByName(candy5,candy6))
-     List<Candy> candiesForBox =candies.stream() //добавьте код здесь
-
-                .filter((candy) -> CandyBox.isProducerAllowed (candy))
-                .map (candy -> {
-                    if (CandyBox.isProducerAllowed (candy)){
-                        return new Candy(candy.name, candy.producer, candy.price-5, candy.amountSold, candy.alternateNames);
-                    } else {
-                        return null;
-                    }
-                })
-        .sorted((candy5, candy6) -> Candy.compareByName(candy5,candy6))
-        .collect(Collectors.toList());
-                CandyBox candyBox = new CandyBox("С Новым Годом", candiesForBox);
-
-        candyBox.printContent();
-    }
-    min(Comparator.comparing(candy -> candy.price));
-     */

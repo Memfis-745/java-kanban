@@ -9,12 +9,9 @@ import managers.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
-    //    static final InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
     String name;
     String description; //
 

@@ -3,8 +3,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
-//import managers.InMemoryTaskManager;
 import managers.*;
 import tasks.*;
 
@@ -61,8 +59,6 @@ public class Main {
         Subtask subTask = fileManagerIn.showSubTask(5);
         System.out.println(subTask);
 
-
-        // смена статуса
         System.out.println("\n");
         System.out.println("Смена статуса задач, подзадач и эпиков :");
         System.out.println("Смена статуса здачи-1 на: IN_PROGRESS");
@@ -118,13 +114,10 @@ public class Main {
         printTask(fileManagerIn);
 
 
-        // удалить все
         System.out.println("Удалить все задачи:");
         fileManagerIn.removeAllTask();
         fileManagerIn.removeAllEpic();
         fileManagerIn.removeAllSubTask();
-        //  printTask();
-
     }
 
     public static void printTask(FileBackedTaskManager fileManagerIn) {

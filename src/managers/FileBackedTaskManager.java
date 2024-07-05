@@ -79,14 +79,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             for (String string : strings) {
                 String[] newSplit = string.split(",");
 
-                if (newSplit[1].equals("TASK")) {
+                if (newSplit[1].equals(TASK.toString())) {
                     fileBackedTaskManager.listOfTask.put(Integer.parseInt(newSplit[0]), fromStringValue(string));
                     fileBackedTaskManager.validationTreeSet(fromStringValue(string));
-                } else if (newSplit[1].equals("EPIC")) {
+                } else if (newSplit[1].equals(EPIC.toString())) {
                     fileBackedTaskManager.listOfEpic.put(Integer.parseInt(newSplit[0]), (Epic) fromStringValue(string));
-                    // fileBackedTaskManager.taskTreeSet.add(fromStringValue(string));
-                    // fileBackedTaskManager.getPrioritizedTasks(fromStringValue(string));
-                } else if (newSplit[1].equals("SUBTASK")) {
+                } else if (newSplit[1].equals(SUBTASK.toString())) {
                     fileBackedTaskManager.listOfSubTask.put(Integer.parseInt(newSplit[0]), (Subtask) fromStringValue(string));
                     fileBackedTaskManager.validationTreeSet(fromStringValue(string));
                     Epic epic = fileBackedTaskManager.listOfEpic.get(Integer.parseInt(newSplit[5]));
@@ -113,19 +111,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 LocalDateTime startTime = LocalDateTime.parse(newSplit[6], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 task = new Task(newSplit[2], newSplit[4], Duration.parse(newSplit[5]), startTime);
                 task.setId(Integer.parseInt(newSplit[0]));
-                task.setStatus(statik(newSplit[3]));
+                task.setStatus(valueOf(newSplit[3]));
                 return task;
 
             case "EPIC":
                 epic = new Epic(newSplit[2], newSplit[4]);
                 epic.setId(Integer.parseInt(newSplit[0]));
-                epic.setStatus(statik(newSplit[3]));
+                epic.setStatus(valueOf(newSplit[3]));
                 return epic;
             case "SUBTASK":
                 startTime = LocalDateTime.parse(newSplit[7], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 subtask = new Subtask(newSplit[2], newSplit[4], Integer.parseInt(newSplit[5]), Duration.parse(newSplit[6]), startTime);
                 subtask.setId(Integer.parseInt(newSplit[0]));
-                subtask.setStatus(statik(newSplit[3]));
+                subtask.setStatus(valueOf(newSplit[3]));
+
                 return subtask;
             default:
                 break;
@@ -133,22 +132,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         return null;
     }
 
-    public static Status statik(String str) {
-        switch (str) {
-            case "NEW":
-                return NEW;
-            case "IN_PROGRESS":
-                return IN_PROGRESS;
-            case "DONE":
-                return DONE;
-            default:
-                break;
-        }
-        return null;
-    }
-
-
-    //
     @Override
     public ArrayList<Task> getAllTask() {
         save();
