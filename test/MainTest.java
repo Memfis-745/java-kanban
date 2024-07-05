@@ -5,6 +5,8 @@ import tasks.Task;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +16,8 @@ class MainTest {
     void main() throws IOException {
         final File file = new File("taskFile.csv");
         final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
-        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1"));
-        fileManagerOut.addTask(new Task("Задача-2", "Описание задачи-2"));
+        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0)));
+        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0)));
         Integer epicId1 = fileManagerOut.addEpic(new Epic("эпик-3", "описание эпика-3"));
 
         FileBackedTaskManager fileManagerIn = FileBackedTaskManager.loadFromFile(file);
