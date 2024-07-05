@@ -5,6 +5,7 @@ import tasks.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
     ArrayList<Task> getAllTask();
@@ -13,6 +14,8 @@ public interface TaskManager {
     ArrayList<Epic> getAllEpic();
 
     ArrayList<Subtask> getAllSubTask();
+
+    public ArrayList<Task> getTreeSet();
 
     void removeAllTask();
 
@@ -48,5 +51,10 @@ public interface TaskManager {
 
     void remove(int id);
 
+    public void epicSubTime(Epic epic, Subtask subtask);
+
+    public Set<Task> getPrioritizedTasks();
+
+    public void validationTreeSet(Task task);
 
 }

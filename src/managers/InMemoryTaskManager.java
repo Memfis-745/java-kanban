@@ -4,9 +4,7 @@ import tasks.*;
 import tasks.Status;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -14,10 +12,12 @@ public class InMemoryTaskManager implements TaskManager {
     final HashMap<Integer, Task> listOfTask = new HashMap<>();
     final HashMap<Integer, Epic> listOfEpic = new HashMap<>();
     final HashMap<Integer, Subtask> listOfSubTask = new HashMap<>();
+    //  Map<Integer, Task> treeTask = new TreeMap<>((task1, task2) -> task1.getStart().compareTo(task1.getStart()));
+
     // public List<Task> history = new ArrayList<>();
     // public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-
-
+    Comparator<Task> userComparator = Comparator.comparing(Task::getStart);
+    Set<Task> taskTreeSet = new TreeSet<>(userComparator);
     HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override                      // 1.1 Возвращает список задач
@@ -30,6 +30,11 @@ public class InMemoryTaskManager implements TaskManager {
     public ArrayList<Epic> getAllEpic() { // 1. Вывести список всех задач"
 
         return new ArrayList<>(listOfEpic.values());
+    }
+
+    @Override
+    public ArrayList<Task> getTreeSet() { // 1. Вывести список Трисетов"
+        return new ArrayList<>(taskTreeSet);
     }
 
     @Override                       // 1.1 Возвращает список подзазач
@@ -91,9 +96,11 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка ручной установки Id");
             taskId = id;
         }
-
+        task.getFinish();
         listOfTask.put(taskId, task);
+        validationTreeSet(task);
         return taskId;
+
 
     }
 
@@ -109,6 +116,7 @@ public class InMemoryTaskManager implements TaskManager {
             epicId = id;
         }
         listOfEpic.put(epicId, epic);
+        //taskTreeSet.add(epic);
         return epicId;
     }
 
@@ -125,10 +133,64 @@ public class InMemoryTaskManager implements TaskManager {
             subtId = subId;
         }
         listOfSubTask.put(subtId, subtask);
-
         Epic epic = listOfEpic.get(epicId);
+
         epic.setSubId(subId);  // присваиваем значение элементу списка в Эпике с новой подзадачей
+
+        epicSubTime(epic, subtask);
+        validationTreeSet(subtask);
         return subtId;
+    }
+
+    @Override
+    public void epicSubTime(Epic epic, Subtask subtask) {    // счетчик
+
+        if (epic.getEpicStart() == null || epic.getEpicStart().isAfter(subtask.getStart())) {
+            epic.setEpicStart(subtask.getStart());
+        }
+
+        if (epic.getEpicFinish() == null || epic.getEpicFinish().isBefore(subtask.getFinish())) {
+            epic.setEpicFinish(subtask.getFinish());
+        }
+        epic.setDuration(epic.getEpicDuration().plus(subtask.getDuration()));
+    }
+
+    @Override
+    public Set<Task> getPrioritizedTasks() {
+        return taskTreeSet;
+    }
+
+    @Override
+    public void validationTreeSet(Task task) {
+        if (task.getStart() == null) {
+            System.out.println("Начальное время не задано");
+            return;
+        }
+        if (taskTreeSet.isEmpty()) {
+            taskTreeSet.add(task);
+        } else {
+            boolean result = taskTreeSet.stream()
+                    .allMatch(taskTree -> {
+
+                                if (taskTree.getStart().isBefore(task.getStart())
+                                        && (taskTree.getFinish().isBefore(task.getStart()))) {
+                                    return true;
+                                } else if ((task.getStart().isBefore(taskTree.getStart())
+                                        && (task.getFinish().isBefore(taskTree.getStart())))) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                    );
+            if (result) {
+                System.out.println("Задача: " + task);
+                taskTreeSet.add(task);
+            } else {
+                System.out.println("Установите другой временной интервал у задачи: " + task);
+            }
+
+        }
     }
 
     @Override
@@ -213,7 +275,14 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = listOfEpic.get(epicId);
             epic.removeSubId(id);
             listOfSubTask.remove(id);
-
+            epic.setEpicStart(null);
+            epic.setEpicFinish(null);
+            epic.setDuration(null);
+            if (!epic.getEpicSub().isEmpty()) {
+                for (int i : epic.getEpicSub()) {
+                    epicSubTime(epic, listOfSubTask.get(i));
+                }
+            }
         }
     }
 
@@ -236,13 +305,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
-
     }
 
     @Override
     public void remove(int id) {
         historyManager.remove(id);
-
     }
 
     public int getId() {    // счетчик
@@ -263,11 +330,37 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-
     public boolean reviewId(int idTemp) {
 
         return listOfTask.containsKey(idTemp) || listOfEpic.containsKey(idTemp) || listOfSubTask.containsKey(idTemp);
     }
+
 }
 
 
+
+
+
+
+
+/*
+    //if (task.getStart())
+      //.sorted((task1, task2) -> Task.compareByName(candy5,candy6))
+     List<Candy> candiesForBox =candies.stream() //добавьте код здесь
+
+                .filter((candy) -> CandyBox.isProducerAllowed (candy))
+                .map (candy -> {
+                    if (CandyBox.isProducerAllowed (candy)){
+                        return new Candy(candy.name, candy.producer, candy.price-5, candy.amountSold, candy.alternateNames);
+                    } else {
+                        return null;
+                    }
+                })
+        .sorted((candy5, candy6) -> Candy.compareByName(candy5,candy6))
+        .collect(Collectors.toList());
+                CandyBox candyBox = new CandyBox("С Новым Годом", candiesForBox);
+
+        candyBox.printContent();
+    }
+    min(Comparator.comparing(candy -> candy.price));
+     */

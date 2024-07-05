@@ -2,13 +2,19 @@ package tasks;
 
 import managers.*;
 
-public class Subtask extends Epic {
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+public class Subtask extends Task {
     int epicId;
+    // Duration duration;
+    // LocalDateTime startTime;
 
-
-    public Subtask(String name, String description, int epicId) {
-        super(name, description);
+    public Subtask(String name, String description, int epicId, Duration duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
         this.epicId = epicId;
+        // this.duration=duration;
+        // this.startTime = startTime;
     }
 
     public TypeTask getType() {
@@ -37,11 +43,15 @@ public class Subtask extends Epic {
 
     @Override
     public String toString() {
+
         return "Subtask{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", taskStatus=" + taskStatus + ", epicId " + epicId +
+                ", start = " + startTime +
+                ", duration= " + duration +
+                ", finish = " + finishTime +
                 '}';
     }
 }
