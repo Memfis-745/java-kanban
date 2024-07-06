@@ -47,19 +47,6 @@ public class Epic extends Task {
         }
 
     }
-    //     int durationMinut;
-    //   public int epicDuration(HashMap<Integer, Subtask> listOfSubTask){
-    //     int durationMinut;
-    //   for(int i:epicSub){
-    //     Subtask subtask = listOfSubTask.get(i);
-    //   start = subtask.getStart();
-    // durationMinut = subtask.getDuration();
-    //         subtask.getDurationSubtask();
-    //   }
-    //  epicSub.stream()
-    //         .
-    //  epicDuration = get // startTime = LocalDateTime.now();
-    // return startTime;
 
     public void setId(int setEpicId) {
         this.id = setEpicId;
