@@ -1,16 +1,50 @@
 package tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import managers.*;
 
 public class Epic extends Task {
-
+    private Duration duration;
+    private LocalDateTime startTime;
+    private LocalDateTime finishTime;
     public ArrayList<Integer> epicSub = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
+
+    }
+
+    public void setEpicStart(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEpicFinish(LocalDateTime finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public LocalDateTime getEpicStart() {
+        return startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEpicFinish() {
+        return finishTime;
+    }
+
+    public Duration getEpicDuration() {
+        //  duration = Duration.between(startTime, finishTime);
+        if (duration == null) {
+            return Duration.between(LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 1, 1, 0, 0));
+        } else {
+            return duration;
+        }
 
     }
 
@@ -94,6 +128,9 @@ public class Epic extends Task {
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", taskStatus=" + taskStatus + " номера подзадач=" + epicSub +
+                ", start = " + startTime +
+                ", duration= " + duration +
+                ", finish = " + finishTime +
                 '}';
     }
 }

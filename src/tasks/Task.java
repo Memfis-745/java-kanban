@@ -1,5 +1,7 @@
 package tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import managers.*;
@@ -14,13 +16,37 @@ public class Task {
     public int id;
     public Integer handId;
     public Status taskStatus;
+    protected Duration duration;
+    public LocalDateTime startTime;
+    protected LocalDateTime finishTime;
 
+
+    public Task(String name, String description, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.startTime = startTime;
+        getFinish();
+    }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
+    public LocalDateTime getStart() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+
+        return duration;
+    }
+
+    public LocalDateTime getFinish() {
+        finishTime = startTime.plus(duration);
+        return finishTime;
+    }
 
     public TypeTask getType() {
         return TypeTask.TASK;
@@ -50,6 +76,7 @@ public class Task {
         return taskStatus;
     }
 
+
     @Override
     public String toString() {
         return "Task{" +
@@ -57,6 +84,9 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", taskStatus=" + taskStatus +
+                ", start = " + startTime +
+                ", duration= " + duration +
+                ", finish = " + finishTime +
                 '}';
     }
 

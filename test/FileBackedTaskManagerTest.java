@@ -1,6 +1,6 @@
 import managers.FileBackedTaskManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import tasks.Status;
 import tasks.Task;
 import tasks.Epic;
@@ -10,16 +10,27 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     int id;
     Task task = new Task("Test addNewTask", "Test addNewTask description");
     Status status = task.getStatus();
+    final File file = new File("taskFile.csv");
+
+    @Override
+    void initial() {
+        taskManager = new FileBackedTaskManager(file);
+    }
+
+
+    @BeforeEach
+    void beforeEach() {
+        initial();
+    }
 
     @Test
     void writeEmptyFile() throws IOException {
@@ -61,5 +72,6 @@ class FileBackedTaskManagerTest {
         assertEquals(epic1, epic2, "Задачи не совпадают.");
 
     }
+
 
 }

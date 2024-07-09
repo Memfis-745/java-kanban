@@ -1,34 +1,41 @@
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
-//import managers.InMemoryTaskManager;
 import managers.*;
 import tasks.*;
 
 public class Main {
-
 
     public static void main(String[] args) {
         final File file = new File("taskFile.csv");
         final FileBackedTaskManager fileManagerOut = new FileBackedTaskManager(file);
 
 
-        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1"));
-        fileManagerOut.addTask(new Task("Задача-2", "Описание задачи-2"));
+        fileManagerOut.addTask(new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0)));
+        fileManagerOut.addTask(new Task("Задача-2", "Описание задачи-2", Duration.ofMinutes(100), LocalDateTime.of(2024, 1, 1, 0, 0)));
         Integer epicId1 = fileManagerOut.addEpic(new Epic("эпик-3", "описание эпика-3"));
         Integer epicId2 = fileManagerOut.addEpic(new Epic("эпик-4", "описание эпика-4"));
-        fileManagerOut.addSubTask(new Subtask("подзадача-5", "первая подзадача к эпику 3", epicId1));
-        fileManagerOut.addSubTask(new Subtask("подзадача-6", "вторая подзадача к эпику 3", epicId1));
-        fileManagerOut.addSubTask(new Subtask("подзадача-7", "первая подзадача к эпику 4", epicId2));
+        fileManagerOut.addSubTask(new Subtask("подзадача-5", "первая подзадача к эпику 3", epicId1, Duration.ofMinutes(103), LocalDateTime.of(2024, 1, 1, 0, 0)));
+        fileManagerOut.addSubTask(new Subtask("подзадача-6", "вторая подзадача к эпику 3", epicId1, Duration.ofMinutes(110), LocalDateTime.of(2024, 2, 1, 0, 0)));
+        fileManagerOut.addSubTask(new Subtask("подзадача-7", "первая подзадача к эпику 4", epicId2, Duration.ofMinutes(90), LocalDateTime.of(2024, 3, 1, 0, 0)));
 
+        System.out.println("\nСписок трисетов Созданных: ");
+        for (Task task : fileManagerOut.getTreeSet()) {
+            System.out.println(task);
+        }
         printTask(fileManagerOut);
 
         FileBackedTaskManager fileManagerIn = FileBackedTaskManager.loadFromFile(file);
-        System.out.println("Передача управления : ");
+        System.out.println("\n\nПередача управления : ");
 
+        System.out.println("Список трисетов Восстановленных: ");
+        for (Task task : fileManagerIn.getTreeSet()) {
+            System.out.println(task);
+        }
 
-        System.out.println("Список задач восстановленных: ");
+        System.out.println("\n Список задач восстановленных: ");
         for (Task task : fileManagerIn.getAllTask()) {
             System.out.println(task);
         }
@@ -39,8 +46,8 @@ public class Main {
         }
 
         System.out.println("Список подзадач восстановленных: ");
-        for (Epic epic : fileManagerIn.getAllSubTask()) {
-            System.out.println(epic);
+        for (Subtask subtask : fileManagerIn.getAllSubTask()) {
+            System.out.println(subtask);
         }
 
         System.out.println("\n");
@@ -52,8 +59,6 @@ public class Main {
         Subtask subTask = fileManagerIn.showSubTask(5);
         System.out.println(subTask);
 
-
-        // смена статуса
         System.out.println("\n");
         System.out.println("Смена статуса задач, подзадач и эпиков :");
         System.out.println("Смена статуса здачи-1 на: IN_PROGRESS");
@@ -109,17 +114,14 @@ public class Main {
         printTask(fileManagerIn);
 
 
-        // удалить все
         System.out.println("Удалить все задачи:");
         fileManagerIn.removeAllTask();
         fileManagerIn.removeAllEpic();
         fileManagerIn.removeAllSubTask();
-        //  printTask();
-
     }
 
     public static void printTask(FileBackedTaskManager fileManagerIn) {
-        System.out.println("Список задач: ");
+        System.out.println("\nСписок задач: ");
         for (Task task : fileManagerIn.getAllTask()) {
             System.out.println(task);
         }
@@ -130,8 +132,8 @@ public class Main {
         }
 
         System.out.println("Список подзадач: ");
-        for (Epic epic : fileManagerIn.getAllSubTask()) {
-            System.out.println(epic);
+        for (Subtask subtask : fileManagerIn.getAllSubTask()) {
+            System.out.println(subtask);
         }
     }
 }
