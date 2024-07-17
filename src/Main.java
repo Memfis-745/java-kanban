@@ -80,7 +80,7 @@ public class Main {
         Subtask subtaskUpd6 = new Subtask("подзадача-6", "вторая подзадача к эпику 3", epicId1, Duration.ofMinutes(110), LocalDateTime.of(2024, 2, 1, 0, 0));
         subtaskUpd5.setStatus(DONE);
         subtaskUpd6.setStatus(DONE);
-        fileManagerIn.updateSubTask(5,subtaskUpd5 );
+        fileManagerIn.updateSubTask(5, subtaskUpd5);
         fileManagerIn.updateSubTask(6, subtaskUpd6);
         printTask(fileManagerIn);
 
