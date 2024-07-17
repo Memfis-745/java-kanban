@@ -201,8 +201,8 @@ public class TaskHandler extends BaseHttpHandler {
 
     private void getEpicSubtaskId(HttpExchange exchange, String id) throws IOException {    //2.1 Получение подзадач эпика по id
         try {
-            String EpicSubJson = gson.toJson(taskManager.showEpic(Integer.parseInt(id)));
-            sendText(exchange, EpicSubJson);
+            String epicSubJson = gson.toJson(taskManager.showEpic(Integer.parseInt(id)));
+            sendText(exchange, epicSubJson);
         } catch (NotFoundException e) {
             sendNotFound(exchange, "Эпик не найден");
         } catch (Exception e) {
@@ -321,8 +321,8 @@ public class TaskHandler extends BaseHttpHandler {
 
     private void historyHandler(String[] splitPath, String body, String method, HttpExchange exchange) throws IOException {
         try {
-            String HistoryToJson = gson.toJson(taskManager.getHistory());
-            sendText(exchange, HistoryToJson);
+            String historyToJson = gson.toJson(taskManager.getHistory());
+            sendText(exchange, historyToJson);
         } catch (Exception e) {
             sendInternalServerError(exchange);
         }
