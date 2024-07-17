@@ -1,8 +1,8 @@
-package Server;
+package server;
 
 
-import Exception.NotFoundException;
-import Exception.TimeConflictException;
+import exception.NotFoundException;
+import exception.TimeConflictException;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import managers.TaskManager;

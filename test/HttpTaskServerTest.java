@@ -1,5 +1,5 @@
-import Exception.NotFoundException;
-import Server.HttpTaskServer;
+import exception.NotFoundException;
+import server.HttpTaskServer;
 import com.google.gson.Gson;
 import managers.Managers;
 import managers.TaskManager;
