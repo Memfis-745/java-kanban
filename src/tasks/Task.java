@@ -4,20 +4,14 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import managers.*;
-
-import tasks.TypeTask;
-
-import tasks.TypeTask.*;
-
 public class Task {
     public String name;
     public String description;
-    public int id;
-    public Integer handId;
+    public int id = 0;
+
     public Status taskStatus;
-    protected Duration duration;
     public LocalDateTime startTime;
+    protected Duration duration;
     protected LocalDateTime finishTime;
 
 
@@ -57,7 +51,7 @@ public class Task {
     }
 
     public void setHandId(Integer handId) {
-        this.handId = handId;
+        this.id = handId;
     }
 
     public void setStatus(Status status) {
@@ -65,11 +59,7 @@ public class Task {
     }
 
     public Integer getId() {
-        if (handId == null) {
-            return id;
-        } else {
-            return handId;
-        }
+        return id;
     }
 
     public Status getStatus() {

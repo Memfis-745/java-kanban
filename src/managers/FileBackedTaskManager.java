@@ -210,15 +210,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public void updateTask(int id, String status) {
-        super.updateTask(id, status);
+    public int updateTask(int id, Task task) {
         save();
+        return super.updateTask(id, task);
     }
 
     @Override
-    public void updateSubTask(int id, String status) {
-        super.updateSubTask(id, status);
+    public int updateSubTask(int id, Subtask subtask) {
         save();
+        return super.updateSubTask(id, subtask);
     }
 
     @Override
