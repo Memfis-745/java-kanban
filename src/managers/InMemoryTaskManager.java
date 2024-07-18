@@ -85,10 +85,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int addTask(Task task) {  // 4.1    создание задачи
         int id;
-        if (task.getId() == 0) {
+        if ((task.getId() == null) || (task.getId() == 0)) {
             id = getId();
         } else if (reviewId(task.getId())) {
-            System.out.println("Данный Id существует новый присвоен автоматически");
+            System.out.println("Данный Id занят новый присвоен автоматически");
             id = getId();
         } else {
             id = task.getId();
@@ -106,7 +106,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Integer addEpic(Epic epic) {   // 4.2    создание эпика
         int id;
-        if (epic.getId() == 0) {
+        if ((epic.getId() == null) || (epic.getId() == 0)) {
             id = getId();
         } else if (reviewId(epic.getId())) {
             System.out.println("Данный Id существует новый присвоен автоматически");
@@ -124,7 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int addSubTask(Subtask subtask) { // 4.3    создание подзадачи
         int id;
-        if (subtask.getId() == 0) {
+        if ((subtask.getId() == null) || (subtask.getId() == 0)) {
             id = getId();
         } else if (reviewId(subtask.getId())) {
             System.out.println("Данный Id существует, новый присвоен автоматически");
@@ -345,45 +345,3 @@ public class InMemoryTaskManager implements TaskManager {
 }
 
 
-
-
-/*
-        if (listOfSubTask.containsKey(id)) {
-
-            Subtask subtask = listOfSubTask.get(id);
-            int epicId = subtask.getEpicId();
-
-            switch (Status.valueOf(status)) {   // меняем статус подзадачи
-                case IN_PROGRESS:
-                    subtask.setStatus(Status.IN_PROGRESS);
-                    listOfSubTask.put(id, subtask);
-                    break;
-                case DONE:
-                    subtask.setStatus(Status.DONE);
-                    listOfSubTask.put(id, subtask);
-                    break;
-                default:
-                    System.out.println("Ошибка");
-            }
-             } else if (listOfEpic.containsKey(id)) {
-            System.out.println("Статус Эпика обновляется автоматически. Измените статусы подзадач");
-        } else {
-            System.out.println("Такой задачи нет");
-        }
-
-         */
-
- /*  switch (Status.valueOf(status)) {
-                case IN_PROGRESS:
-                    taskSaved.setStatus(Status.IN_PROGRESS);
-                    listOfTask.put(id, taskSaved);
-                    break;
-                case DONE:
-                    taskSaved.setStatus(Status.DONE);
-                    listOfTask.put(id, taskSaved);
-                    break;
-                default:
-                    System.out.println("Ошибка");
-                    }
-
-           */

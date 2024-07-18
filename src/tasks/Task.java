@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Task {
     public String name;
     public String description;
-    public int id = 0;
+    public int id;
 
     public Status taskStatus;
     public LocalDateTime startTime;

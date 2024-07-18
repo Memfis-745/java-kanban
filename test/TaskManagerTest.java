@@ -193,7 +193,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         //2. Меняем статус одной из подзадач на DONE. Эпик - NEW, подзадача DONE
         subtask.setStatus(DONE);
-        fileManagerIn.updateSubTask(subtaskId,subtask);
+        fileManagerIn.updateSubTask(subtaskId, subtask);
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), NEW);
         assertEquals(fileManagerIn.showSubTask(subtaskId).getStatus(), DONE);
 
@@ -206,7 +206,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         subtask.setStatus(IN_PROGRESS);
         subtask1.setStatus(IN_PROGRESS);
-        fileManagerIn.updateSubTask(subtaskId,subtask );
+        fileManagerIn.updateSubTask(subtaskId, subtask);
         fileManagerIn.updateSubTask(subtaskId1, subtask1);
 
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), IN_PROGRESS);

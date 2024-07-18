@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import static java.net.http.HttpRequest.BodyPublishers;
 import static java.net.http.HttpRequest.newBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.testng.AssertJUnit.assertNull;
 import static tasks.Status.NEW;
 
 public class HttpTaskServerTest {
@@ -101,12 +102,11 @@ public class HttpTaskServerTest {
         taskManager.nulId();
         Task task1 = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
         Task task2 = new Task("Задача-2", "Описание задачи-2", Duration.ofMinutes(120), LocalDateTime.of(2024, 2, 1, 0, 0));
-        URI url = URI.create("http://localhost:8080/tasks/1");
+        URI url = URI.create("http://localhost:8080/tasks");
 
         int idTask1 = taskManager.addTask(task1);
         task2.setId(idTask1);
         task2.setStatus(NEW);
-        System.out.println(task2);
 
         String body = gson.toJson(task2);
 
@@ -149,7 +149,7 @@ public class HttpTaskServerTest {
         taskManager.addSubTask(subtaskCreate);
         subtaskUpd.setId(2);
 
-        URI url = URI.create("http://localhost:8080/subtasks/2");
+        URI url = URI.create("http://localhost:8080/subtasks");
         String body = gson.toJson(subtaskUpd);
 
         HttpRequest request = newBuilder().uri(url).POST(BodyPublishers.ofString(body, StandardCharsets.UTF_8)).build();
@@ -257,4 +257,23 @@ public class HttpTaskServerTest {
         assertEquals(404, response.statusCode());
 
     }
+
+    @Test
+    public void RemoveTasksById() throws IOException, InterruptedException {
+        taskManager.nulId();
+        Task task = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
+        taskManager.addTask(task);
+
+        URI url = URI.create("http://localhost:8080/tasks/1");
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder().uri(url).method("DELETE", HttpRequest.BodyPublishers.ofString("tasks")).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(201, response.statusCode(), "Код ответа не совпадает");
+        assertNull(taskManager.showTask(task.getId()));
+        System.out.println("ответ");
+
+    }
+
 }
