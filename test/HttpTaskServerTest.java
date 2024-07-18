@@ -22,8 +22,9 @@ import java.time.LocalDateTime;
 import static java.net.http.HttpRequest.BodyPublishers;
 import static java.net.http.HttpRequest.newBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.testng.AssertJUnit.assertNull;
+//import static org.testng.AssertJUnit.assertNull;
 import static tasks.Status.NEW;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class HttpTaskServerTest {
 
