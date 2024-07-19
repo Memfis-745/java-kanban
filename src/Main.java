@@ -1,10 +1,15 @@
+import managers.FileBackedTaskManager;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import managers.*;
-import tasks.*;
+import static tasks.Status.DONE;
+import static tasks.Status.IN_PROGRESS;
 
 public class Main {
 
@@ -67,9 +72,16 @@ public class Main {
         System.out.println("Результат: \n");
 
 
-        fileManagerIn.updateTask(1, "IN_PROGRESS");
-        fileManagerIn.updateSubTask(5, "DONE");
-        fileManagerIn.updateSubTask(6, "DONE");
+        Task updateTask = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
+        updateTask.setStatus(IN_PROGRESS);
+        fileManagerIn.updateTask(1, updateTask);
+        // fileManagerIn.updateTask(1, "IN_PROGRESS");
+        Subtask subtaskUpd5 = new Subtask("подзадача-5", "первая подзадача к эпику 3", epicId1, Duration.ofMinutes(103), LocalDateTime.of(2024, 1, 1, 0, 0));
+        Subtask subtaskUpd6 = new Subtask("подзадача-6", "вторая подзадача к эпику 3", epicId1, Duration.ofMinutes(110), LocalDateTime.of(2024, 2, 1, 0, 0));
+        subtaskUpd5.setStatus(DONE);
+        subtaskUpd6.setStatus(DONE);
+        fileManagerIn.updateSubTask(5, subtaskUpd5);
+        fileManagerIn.updateSubTask(6, subtaskUpd6);
         printTask(fileManagerIn);
 
         System.out.println("\n");

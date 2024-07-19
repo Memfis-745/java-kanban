@@ -161,7 +161,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     void updateTaskStatus() { // 5.1 изменения статуса задачи
         Task task = new Task("Задача-1", "Описание задачи-1", Duration.ofMinutes(120), LocalDateTime.of(2024, 1, 1, 0, 0));
         taskManager.addTask(task);
-        taskManager.updateTask(1, "IN_PROGRESS");
+        taskManager.updateTask(1, task);
         assertEquals(IN_PROGRESS, task.getStatus(), "Статус не изменился");
     }
 
@@ -192,17 +192,23 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), fileManagerIn.showSubTask(subtaskId1).getStatus());
 
         //2. Меняем статус одной из подзадач на DONE. Эпик - NEW, подзадача DONE
-        fileManagerIn.updateSubTask(subtaskId, "DONE");
+        subtask.setStatus(DONE);
+        fileManagerIn.updateSubTask(subtaskId, subtask);
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), NEW);
         assertEquals(fileManagerIn.showSubTask(subtaskId).getStatus(), DONE);
 
         //3. Меняем статус второй подзадачи эпика на DONE. Эпик стал DONE
-        fileManagerIn.updateSubTask(subtaskId1, "DONE");
+        subtask1.setStatus(DONE);
+        fileManagerIn.updateSubTask(subtaskId1, subtask1);
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), DONE);
 
         //4. Меняем статус обоих эпиков на IN_PROGRESS. Эпик тоже становится IN_PROGRESS
-        fileManagerIn.updateSubTask(subtaskId, "IN_PROGRESS");
-        fileManagerIn.updateSubTask(subtaskId1, "IN_PROGRESS");
+
+        subtask.setStatus(IN_PROGRESS);
+        subtask1.setStatus(IN_PROGRESS);
+        fileManagerIn.updateSubTask(subtaskId, subtask);
+        fileManagerIn.updateSubTask(subtaskId1, subtask1);
+
         assertEquals(fileManagerIn.showEpic(epicId).getStatus(), IN_PROGRESS);
     }
 

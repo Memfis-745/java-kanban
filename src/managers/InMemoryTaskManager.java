@@ -84,58 +84,67 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addTask(Task task) {  // 4.1    создание задачи
-        int id = getId();
+        int id;
+        if ((task.getId() == null) || (task.getId() == 0)) {
+            id = getId();
+        } else if (reviewId(task.getId())) {
+            System.out.println("Данный Id занят новый присвоен автоматически");
+            id = getId();
+        } else {
+            id = task.getId();
+        }
+
         task.setId(id);
         task.setStatus(Status.NEW);
 
-        int taskId = task.getId();
-        if (reviewId(taskId)) {
-            System.out.println("Ошибка ручной установки Id");
-            taskId = id;
-        }
         task.getFinish();
-        listOfTask.put(taskId, task);
+        listOfTask.put(id, task);
         validationTreeSet(task);
-        return taskId;
-
-
+        return id;
     }
 
     @Override
     public Integer addEpic(Epic epic) {   // 4.2    создание эпика
-        int id = getId();
+        int id;
+        if ((epic.getId() == null) || (epic.getId() == 0)) {
+            id = getId();
+        } else if (reviewId(epic.getId())) {
+            System.out.println("Данный Id существует новый присвоен автоматически");
+            id = getId();
+        } else {
+            id = epic.getId();
+        }
         epic.setId(id);
         epic.setStatus(Status.NEW);
 
-        int epicId = epic.getId();
-        if (reviewId(epicId)) {
-            System.out.println("Ошибка ручной установки Id");
-            epicId = id;
-        }
-        listOfEpic.put(epicId, epic);
-        return epicId;
+        listOfEpic.put(id, epic);
+        return id;
     }
 
     @Override
     public int addSubTask(Subtask subtask) { // 4.3    создание подзадачи
-        int subId = getId();
+        int id;
+        if ((subtask.getId() == null) || (subtask.getId() == 0)) {
+            id = getId();
+        } else if (reviewId(subtask.getId())) {
+            System.out.println("Данный Id существует, новый присвоен автоматически");
+            id = getId();
+        } else {
+            id = subtask.getId();
+        }
+
         subtask.setSubId(id);
         int epicId = subtask.getEpicId();
         subtask.setStatus(Status.NEW);
 
-        int subtId = subtask.getId();
-        if (reviewId(subtId)) {
-            System.out.println("Ошибка ручной установки Id");
-            subtId = subId;
-        }
-        listOfSubTask.put(subtId, subtask);
+        listOfSubTask.put(id, subtask);
         Epic epic = listOfEpic.get(epicId);
 
-        epic.setSubId(subId);  // присваиваем значение элементу списка в Эпике с новой подзадачей
+        epic.setSubId(id);  // присваиваем значение элементу списка в Эпике с новой подзадачей
 
         epicSubTime(epic, subtask);
         validationTreeSet(subtask);
-        return subtId;
+        return id;
     }
 
     @Override
@@ -157,13 +166,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void validationTreeSet(Task task) {
+    public boolean validationTreeSet(Task task) {
         if (task.getStart() == null) {
             System.out.println("Начальное время не задано");
-            return;
+            return false;
         }
         if (taskTreeSet.isEmpty()) {
             taskTreeSet.add(task);
+            return true;
         } else {
             boolean result = taskTreeSet.stream()
                     .allMatch(taskTree -> {
@@ -180,73 +190,74 @@ public class InMemoryTaskManager implements TaskManager {
                             }
                     );
             if (result) {
-                System.out.println("Задача: " + task);
+                //   System.out.println("Задача добавленная в трисет: " + task);
                 taskTreeSet.add(task);
+                return true;
             } else {
                 System.out.println("Установите другой временной интервал у задачи: " + task);
+
             }
 
         }
+        return false;
     }
 
     @Override
-    public void updateTask(int id, String status) { // 5.1 изменения статуса задачи
-        if (listOfTask.containsKey(id)) {
-            Task task = listOfTask.get(id);
-            switch (Status.valueOf(status)) {
-                case IN_PROGRESS:
-                    task.setStatus(Status.IN_PROGRESS);
-                    listOfTask.put(id, task);
-                    break;
-                case DONE:
-                    task.setStatus(Status.DONE);
-                    listOfTask.put(id, task);
-                    break;
-                default:
-                    System.out.println("Ошибка");
-            }
-        } else {
-            System.out.println("Такой задачи нет");
+    public int updateTask(int id, Task taskUpd) { // 5.1 изменение статуса задачи
+        if (taskUpd == null) {
+            System.out.println("Входящая задача пуста");
+            return 404;
         }
+        if (!listOfTask.containsKey(id)) {
+            System.out.println("Такой задачи нет");
+            return 404;
+        }
+        Task taskSaved = listOfTask.get(id);
+        taskTreeSet.remove(taskSaved);
+        if (validationTreeSet(taskUpd)) {
+            listOfTask.put(id, taskUpd);
+        } else {
+            validationTreeSet(taskSaved);
+            System.out.println("Обновленная задача пересекается по времени с существующими");
+            return 406;
+
+        }
+
+        return 201;
     }
 
     @Override                                           // 5.2 изменение статуса подзадачи
-    public void updateSubTask(int id, String status) {
+    public int updateSubTask(int id, Subtask subtaskUpd) {
 
-        if (listOfSubTask.containsKey(id)) {
-
-            Subtask subtask = listOfSubTask.get(id);
-            int epicId = subtask.getEpicId();
-
-            switch (Status.valueOf(status)) {   // меняем статус подзадачи
-                case IN_PROGRESS:
-                    subtask.setStatus(Status.IN_PROGRESS);
-                    listOfSubTask.put(id, subtask);
-                    break;
-                case DONE:
-                    subtask.setStatus(Status.DONE);
-                    listOfSubTask.put(id, subtask);
-                    break;
-                default:
-                    System.out.println("Ошибка");
-            }
-
-            Epic epic = listOfEpic.get(epicId);
-
-            epic.reNewEpicStatus(listOfSubTask);
-            listOfEpic.put(epicId, epic);    // обновляем статус эпика.
-
-        } else if (listOfEpic.containsKey(id)) {
-            System.out.println("Статус Эпика обновляется автоматически. Измените статусы подзадач");
-        } else {
-            System.out.println("Такой задачи нет");
+        if (subtaskUpd == null) {
+            System.out.println("Входящая подзадача пуста");
+            return 404;
         }
+        if (!listOfSubTask.containsKey(id)) {
+            System.out.println("Такой подзадачи нет");
+            return 404;
+        }
+        Subtask subtaskSaved = listOfSubTask.get(id);
+        taskTreeSet.remove(subtaskSaved);
+
+        if (validationTreeSet(subtaskUpd)) {
+            listOfSubTask.put(id, subtaskUpd);
+        } else {
+            validationTreeSet(subtaskSaved);
+            System.out.println("Обновленная подзадача пересекается по времени с существующими");
+            return 406;
+        }
+
+        int epicId = subtaskSaved.getEpicId();
+        Epic epic = listOfEpic.get(epicId);
+        epic.reNewEpicStatus(listOfSubTask);
+        listOfEpic.put(epicId, epic);    // обновляем статус эпика.
+        return 201;
     }
 
 
     @Override
     public void removeByIdTask(int id) {   // 6.1 Удалить задачу по идентификатору
-
         if (listOfTask.containsKey(id)) {
             listOfTask.remove(id);
         }
@@ -332,7 +343,5 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 }
-
-
 
 

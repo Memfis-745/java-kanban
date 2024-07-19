@@ -35,9 +35,9 @@ public interface TaskManager {
 
     int addSubTask(Subtask subtask);
 
-    void updateTask(int id, String status);
+    int updateTask(int id, Task task);
 
-    void updateSubTask(int id, String status);
+    int updateSubTask(int id, Subtask subtask);
 
     void removeByIdTask(int id);
 
@@ -55,6 +55,7 @@ public interface TaskManager {
 
     public Set<Task> getPrioritizedTasks();
 
-    public void validationTreeSet(Task task);
+    public boolean validationTreeSet(Task task);
 
+    public void nulId();
 }

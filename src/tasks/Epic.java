@@ -5,12 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import managers.*;
-
 public class Epic extends Task {
-    private Duration duration;
-    private LocalDateTime startTime;
-    private LocalDateTime finishTime;
     public ArrayList<Integer> epicSub = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -39,7 +34,7 @@ public class Epic extends Task {
     }
 
     public Duration getEpicDuration() {
-        //  duration = Duration.between(startTime, finishTime);
+
         if (duration == null) {
             return Duration.between(LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 1, 1, 0, 0));
         } else {
