@@ -50,7 +50,7 @@ public class TaskHandler extends BaseHttpHandler {
     }
 
     @Override
-    protected void getAllTask(HttpExchange exchange) throws IOException {                       // # 3. Получение всех задач
+    protected void getAllTask(HttpExchange exchange) throws IOException {                       // 3. Получение всех задач
         try {
             if (!taskManager.getAllTask().isEmpty()) {
                 String taskJson = gson.toJson(taskManager.getAllTask());
