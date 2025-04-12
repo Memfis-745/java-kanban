@@ -45,16 +45,16 @@
 
 Дополнительно, FileBackedTaskManager предоставляет функциональность для:
 
-•  Сохранения данных о задачах, эпиках и подзадачах в файл.
-•  Загрузки данных из файла и восстановления состояния менеджера задач.
-•  Управления задачами в памяти, используя унаследованную функциональность от InMemoryTaskManager.
+-  Сохранения данных о задачах, эпиках и подзадачах в файл.
+-  Загрузки данных из файла и восстановления состояния менеджера задач.
+-  Управления задачами в памяти, используя унаследованную функциональность от InMemoryTaskManager.
 
 Конструктор FileBackedTaskManager (File file): Принимает объект File в качестве аргумента, указывая файл, который будет использоваться для хранения данных.
 save() - метод, для записи файла. В методе save() перебираются все hash-map, соответствующие задачам подзадачам и эпикам: listOfTask, listOfEpic и listOfSubTask. Объект преобразовывается в строку и записывается в файл в виде:
 
-•  Task: id,type,name,status,description,duration,startTime
-•  Epic: id,type,name,status,description
-•  Subtask: id,type,name,status,description,epicId,duration,startTime
+-  Task: id,type,name,status,description,duration,startTime
+- Epic: id,type,name,status,description
+-  Subtask: id,type,name,status,description,epicId,duration,startTime
 
 ##### loadFromFile(File file):
 Статический метод, который построчно загружает данные из файла и создает новый объект FileBackedTaskManager с восстановленными данными. На основе типа задачи создает соответствующие объекты (Task, Epic или Subtask) и добавляет их в соответствующие коллекции (listOfTask, listOfEpic и listOfSubTask). Для подзадач устанавливает связь с эпиком и обновляет время начала и продолжительность эпика.
